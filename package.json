@@ -4,7 +4,8 @@
   "description": "SpaceApp Repo",
   "main": "app.js",
   "dependencies": {
-    "expressjs": "^1.0.1"
+    "express": "^4.16.4",
+    "lokijs": "^1.5.5"
   },
   "devDependencies": {},
   "scripts": {
