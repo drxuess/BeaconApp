@@ -18,8 +18,12 @@ if (!fs.existsSync('database.json')) {
 var wait = ms => new Promise((r, j)=>setTimeout(r, ms))
 var obj;
 var fireData;
+app.use('/img', express.static(__dirname + '/web/img'));
+app.use('/css', express.static(__dirname + '/web/css'));
+app.use('/js', express.static(__dirname + '/web/js'));
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.sendFile(__dirname + "/web/home.html"))
+app.get('/fireinfo', (req, res) => res.send(req.query.postcode))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
@@ -30,7 +34,6 @@ fs.readFile('data/FIRMS/c6/Australia_NewZealand/newest.json', function (err, dat
 	fireData = data;
 	handleFile()
 	addFireData()
-	
 });
 
 function addFireData() {

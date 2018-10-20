@@ -7,7 +7,6 @@ fs.readFile('data/FIRMS/c6/Australia_NewZealand/newest.json', function (err, dat
   if (err) throw err;
   fireData = data;
   handleFile()
-
 });
 
 function handleFile() {
