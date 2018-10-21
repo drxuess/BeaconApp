@@ -1,7 +1,7 @@
 // Download the helper library from https://www.twilio.com/docs/node/install
 // Your Account Sid and Auth Token from twilio.com/console
-const accountSid = 'AC94c8ce4abe01e424ddb781e63dd8ed24';
-const authToken = '5055e904607ab9cba167aab310bedb8a';
+const accountSid = '[INSERT ACCT ID HERE]';
+const authToken = '[INSERT AUTH TOKEN HERE]';
 const client = require('twilio')(accountSid, authToken);
 const toMobile = '+61468619908'
 const fromMobile = '+61428170836'
