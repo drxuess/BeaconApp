@@ -3,6 +3,8 @@ const app = express()
 const port = 3000
 const fs = require('fs')
 const loki = require("lokijs")
+const jsdom = require("jsdom")
+const { JSDOM } = jsdom;
 
 var Distance = require('geo-distance');
 
@@ -64,7 +66,28 @@ function startServer() {
 	  	}
 
         var location = postcodes.findOne({postcode: postcode})
-        res.send([min_dist, fires.get(closest_fire)])
+        var fire = fires.get(closest_fire)
+        if(min_dist > 20){
+            fs.readFile(__dirname + "/web/nofire.html", 'utf8', function(error, data) {
+                var dom = new JSDOM(data)
+                dom.window.document.querySelector("#longitude").setAttribute("value", primary[0].lon)
+                dom.window.document.querySelector("#latitude").setAttribute("value", primary[0].lat)
+                dom.window.document.querySelector("#flongitude").setAttribute("value", primary[0].lon)
+                dom.window.document.querySelector("#flatitude").setAttribute("value", primary[0].lat)
+                res.send(dom.serialize())
+            });
+        } else {
+            fs.readFile(__dirname + "/web/fire.html", 'utf8', function(error, data) {
+                var dom = new JSDOM(data)
+                dom.window.document.querySelector("#firetitle").textContent = "Fire detected near " + postcode + ""
+                dom.window.document.querySelector("#longitude").setAttribute("value", primary[0].lon)
+                dom.window.document.querySelector("#latitude").setAttribute("value", primary[0].lat)
+                dom.window.document.querySelector("#flongitude").setAttribute("value", fire.longitude)
+                dom.window.document.querySelector("#flatitude").setAttribute("value", fire.latitude)
+                res.send(dom.serialize())
+            });
+        }
+
     })
     app.get('/signup', function (req, res) {
         res.sendFile(__dirname + "/web/signup.html")
@@ -79,8 +102,13 @@ function startServer() {
             res.sendFile(__dirname + "/web/registered.html")
         } catch (error) {
             res.send("Fail")
-        }
-        
+        }  
+    })
+    app.get('/thankyou', function (req, res) {
+        res.sendFile(__dirname + "/web/thanks.html")
+    })
+    app.get('/fireconfirm', function (req, res) {
+        res.sendFile(__dirname + "/web/fire.html")
     })
     app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }

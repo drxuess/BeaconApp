@@ -10,8 +10,10 @@
     "express": "^4.16.4",
     "geo-distance": "^0.2.0",
     "geo-distance-js": "^1.0.0",
+    "jsdom": "^12.2.0",
     "lokijs": "^1.5.5",
     "ngrok": "^3.1.0",
+    "node-html-parser": "^1.1.10",
     "twilio": "^3.23.1"
   },
   "devDependencies": {},
