@@ -47,7 +47,7 @@ function startServer() {
         try {
             users.insert({mobileNumber: number, postcode: postcode})
             db.save()
-            res.send("Success")
+            res.sendFile(__dirname + "/web/registered.html")
         } catch (error) {
             res.send("Fail")
         }
