@@ -1,13 +1,22 @@
 const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+var bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
-  twiml.message('The Robots are coming! Head for the hills!');
+  var body = req.body.Body
+  var postcode = body.match(/[0-9]{4}/)[0]
+
+
+  var returnMessage = 'Thanks for your input into the Beacon Fire Service! Cheers for your contribution regarding postcode: ' + postcode + '.'
+
+  twiml.message(returnMessage);
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
   res.end(twiml.toString());
